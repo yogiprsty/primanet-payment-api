@@ -17,10 +17,8 @@ const verifyToken = (req, res, next) => {
     if (err) {
       res.status(401).send({
         message: err,
-        key,
       });
     } else {
-      console.log(decoded);
       next();
     }
   });

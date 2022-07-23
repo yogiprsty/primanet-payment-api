@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.post('/create', createUser);
 router.get('/home', [verifyToken], (req, res) => {
-  res.send('Authorized User');
+  res.send('Hello User');
 });
 
 module.exports = router;
