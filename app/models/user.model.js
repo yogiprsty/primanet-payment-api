@@ -7,6 +7,10 @@ const User = (sequelize, Sequelize) => (
     password: {
       type: Sequelize.STRING,
     },
+    isAdmin: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: false,
+    },
   })
 );
 

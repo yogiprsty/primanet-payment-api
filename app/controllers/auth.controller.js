@@ -19,7 +19,7 @@ const signin = async (req, res) => {
     if (!match) {
       res.send('Invalid Username or Password');
     }
-    jwt.sign({ data: password }, key, { expiresIn: '1h' }, (err, token) => {
+    jwt.sign({ id: user.id }, key, { expiresIn: '1h' }, (err, token) => {
       res.send({ token });
     });
   } catch (error) {
