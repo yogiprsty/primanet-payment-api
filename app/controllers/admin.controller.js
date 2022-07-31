@@ -7,9 +7,10 @@ const adminCode = process.env.ADMIN_CODE;
 const saltRounds = 10;
 
 const registerAdmin = (req, res) => {
-  const { phone, password, code } = req.body;
+  const {
+    phone, name, password, code,
+  } = req.body;
   if (code !== adminCode) {
-    console.log(code, adminCode);
     return res.status(401).send({
       message: 'Require Admin Code',
     });
@@ -27,7 +28,9 @@ const registerAdmin = (req, res) => {
 
   const hash = bcrypt.hashSync(password, saltRounds);
 
-  const user = { phone, password: hash, isAdmin: 1 };
+  const user = {
+    phone, name, password: hash, isAdmin: 1,
+  };
   User.create(user)
     .then((result) => {
       res.status(201);

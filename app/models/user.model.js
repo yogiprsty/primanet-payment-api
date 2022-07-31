@@ -4,6 +4,13 @@ const User = (sequelize, Sequelize) => (
       type: Sequelize.STRING,
       unique: true,
     },
+    name: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
+    address: {
+      type: Sequelize.STRING,
+    },
     password: {
       type: Sequelize.STRING,
     },

@@ -6,7 +6,9 @@ const User = db.users;
 // const { Op } = db.Sequelize;
 
 const createUser = (req, res) => {
-  const { phone, password } = req.body;
+  const {
+    phone, name, address, password,
+  } = req.body;
 
   // Minimum eight characters, at least one letter and one number
   const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
@@ -21,7 +23,9 @@ const createUser = (req, res) => {
 
   const hash = bcrypt.hashSync(password, saltRounds);
 
-  const user = { phone, password: hash };
+  const user = {
+    phone, name, address, password: hash,
+  };
   User.create(user)
     .then((result) => {
       res.status(201);
