@@ -11,11 +11,15 @@ A RESTful API for Primanet Payment Application, this API provide payment using M
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-### API
-
+### API Endpoint
+#### Authentication
 | URL                          | Method | Authorization | Data                                                                                   | Description                      |
 |------------------------------|--------|---------------|----------------------------------------------------------------------------------------|----------------------------------|
 | /api/auth/signin             | POST   | None          | - phone<br/>- password                                                                 | Login user                       |
+
+#### Admin
+| URL                          | Method | Authorization | Data                                                                                   | Description                      |
+|------------------------------|--------|---------------|----------------------------------------------------------------------------------------|----------------------------------|
 | /api/admin/register          | POST   | None          | - phone<br/>- email<br/>- name<br/>- password<br/>- code                               | Register new admininstrator      |
 | /api/admin/packages          | POST   | Admin         | - name<br/>- price                                                                     | Create new internet package      |
 | /api/admin/packages          | GET    | Admin         | None                                                                                   | Get all packages                 |
@@ -29,6 +33,11 @@ A RESTful API for Primanet Payment Application, this API provide payment using M
 | /api/admin/users/:id         | DELETE | Admin         | None                                                                                   | Delete package by ID             |
 | /api/admin/generate-payments | POST   | Admin         | None                                                                                   | Generate monthly payments        |
 | /api/admin/payments          | GET    | Admin         | None                                                                                   | Get all payments                 |
+
+#### User
+
+| URL                          | Method | Authorization | Data                                                                                   | Description                      |
+|------------------------------|--------|---------------|----------------------------------------------------------------------------------------|----------------------------------|
 | /api/user/profile            | GET    | User          | None                                                                                   | Get profile data                 |
 | /api/user/payments/          | GET    | User          | None                                                                                   | Get package which belong to user |
 | /api/user/payments/:id       | GET    | User          | None                                                                                   | Get payment token                |
