@@ -1,16 +1,20 @@
 const express = require('express');
+const { registerAdmin } = require('../controllers/admin.controller');
+const { generatePayment } = require('../controllers/payment.controller');
 const {
-  registerAdmin,
+  createUser,
+  getAllUsers,
+  getUser,
+  updateUser,
+  deleteUser,
+} = require('../controllers/user.controller');
+const {
   createPackage,
   getAllPackages,
   getPackage,
   updatePackage,
   deletePackage,
-  getAllUsers,
-  getUser,
-} = require('../controllers/admin.controller');
-const { generatePayment } = require('../controllers/payment.controller');
-const { createUser } = require('../controllers/user.controller');
+} = require('../controllers/package.controller');
 const { verifyToken, isAdmin } = require('../middleware/authJwt');
 
 const router = express.Router();
@@ -20,6 +24,8 @@ router.post('/register', registerAdmin);
 router.post('/users', [verifyToken, isAdmin], createUser);
 router.get('/users', [verifyToken, isAdmin], getAllUsers);
 router.get('/users/:id', [verifyToken, isAdmin], getUser);
+router.put('/users/:id', [verifyToken, isAdmin], updateUser);
+router.delete('/users/:id', [verifyToken, isAdmin], deleteUser);
 
 // package
 router.post('/packages', [verifyToken, isAdmin], createPackage);
