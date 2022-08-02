@@ -24,9 +24,9 @@ A RESTful API for Primanet Payment Application, this API provide payment using M
 | /api/admin/packages/:id | DELETE | Admin         | None                                                                                   | Delete package by ID             |
 | /api/admin/users        | POST   | Admin         | - phone<br/>- email<br/>- name<br/>- password<br/>- code<br/>- address<br/>- packageId | Create new user                  |
 | /api/admin/users        | GET    | Admin         | None                                                                                   | Get all users                    |
-| /api/admin/:id          | GET    | Admin         | None                                                                                   | Get specific user by ID          |
-| /api/admin/:id          | PUT    | Admin         | - phone<br/>- email<br/>- name<br/>- password<br/>- code<br/>- address<br/>- packageId | Update package by ID             |
-| /api/admin/:id          | DELETE | Admin         | None                                                                                   | Delete package by ID             |
+| /api/admin/users/:id    | GET    | Admin         | None                                                                                   | Get specific user by ID          |
+| /api/admin/users/:id    | PUT    | Admin         | - phone<br/>- email<br/>- name<br/>- password<br/>- code<br/>- address<br/>- packageId | Update package by ID             |
+| /api/admin/users/:id    | DELETE | Admin         | None                                                                                   | Delete package by ID             |
 | /api/user/profile       | GET    | User          | None                                                                                   | Get profile data                 |
 | /api/user/payments/     | GET    | User          | None                                                                                   | Get package which belong to user |
 | /api/user/payments/:id  | GET    | User          | None                                                                                   | Get payment token                |
