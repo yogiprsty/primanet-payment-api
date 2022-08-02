@@ -31,7 +31,17 @@ const generatePayment = async (req, res) => {
     });
 };
 
-const getPayment = async (req, res) => {
+const getAllPayments = (req, res) => {
+  Payment.findAll({ include: [User] })
+    .then((result) => res.send(result))
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message,
+      });
+    });
+};
+
+const userPayment = async (req, res) => {
   const paymentId = req.params.payment_id;
   const { user } = req;
 
@@ -66,7 +76,7 @@ const getPayment = async (req, res) => {
     });
 };
 
-const getAllPayments = (req, res) => {
+const userAllPayments = (req, res) => {
   Payment.findAll({
     where: {
       userId: req.user.id,
@@ -80,4 +90,9 @@ const getAllPayments = (req, res) => {
   });
 };
 
-module.exports = { getPayment, generatePayment, getAllPayments };
+module.exports = {
+  userPayment,
+  generatePayment,
+  userAllPayments,
+  getAllPayments,
+};

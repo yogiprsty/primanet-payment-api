@@ -8,8 +8,8 @@ const router = express.Router();
 // parsing json data
 router.use(express.json());
 
+router.use('/api/auth', authRouter);
 router.use('/api/admin', adminRouter);
 router.use('/api/user', userRouter);
-router.use('/api/auth', authRouter);
 
 module.exports = router;
