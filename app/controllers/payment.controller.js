@@ -35,7 +35,7 @@ const getPayment = async (req, res) => {
 
   const payment = await Payment.findByPk(paymentId);
   if (payment.paid) {
-    return res.send(payment);
+    return res.send({ payment, user });
   }
   const snap = new midtransClient.Snap({
     // Set to true if you want Production Environment (accept real transaction).
