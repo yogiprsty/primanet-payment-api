@@ -62,7 +62,7 @@ const createPackage = (req, res) => {
     });
 };
 
-const getAllUser = async (req, res) => {
+const getAllUsers = async (req, res) => {
   const users = await User.findAll({
     where: {
       isAdmin: 0,
@@ -72,6 +72,20 @@ const getAllUser = async (req, res) => {
   res.send(users);
 };
 
+const getUser = async (req, res) => {
+  const { id } = req.params;
+  User.findByPk(id, { includes: [Package] })
+    .then((result) => {
+      console.log(result);
+      res.send(result);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message,
+      });
+    });
+};
+
 module.exports = {
-  registerAdmin, createPackage, getAllUser,
+  registerAdmin, createPackage, getAllUsers, getUser,
 };
