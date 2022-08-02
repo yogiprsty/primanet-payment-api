@@ -7,6 +7,9 @@ const CLIENT_KEY = process.env.MIDTRANS_CLIENT_KEY;
 
 const generatePayment = async (req, res) => {
   const d = new Date();
+  const YY = new Intl.DateTimeFormat('en', { year: '2-digit' }).format(d);
+  const MM = new Intl.DateTimeFormat('en', { month: '2-digit' }).format(d);
+  const DD = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
   const users = await User.findAll({
     where: {
       isAdmin: 0,
@@ -15,8 +18,7 @@ const generatePayment = async (req, res) => {
   });
   const payments = [];
   users.forEach((user) => {
-    const packageSlug = user.package.name.replace(/\s/g, '').toLowerCase();
-    const paymentId = `${d.getDay()}${d.getMonth()}${d.getFullYear()}-${user.id}-${packageSlug}`;
+    const paymentId = `NET-${YY}${MM}${DD}${user.phone}`;
     const payment = { payment_id: paymentId, userId: user.id };
     payments.push(payment);
   });
