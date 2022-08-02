@@ -2,6 +2,7 @@ const express = require('express');
 const { getPayments } = require('../controllers/payment.controller');
 const { getProfile } = require('../controllers/user.controller');
 const { verifyToken } = require('../middleware/authJwt');
+
 const router = express.Router();
 
 router.get('/home', [verifyToken], (req, res) => {
