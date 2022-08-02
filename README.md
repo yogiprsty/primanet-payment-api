@@ -17,9 +17,9 @@ A RESTful API for Primanet Payment Application, this API provide payment using M
 |---------------------------|--------|---------------|----------------------------------------------------------------------------------------|----------------------------------|
 | /api/auth/signin          | POST   | None          | - phone<br/>- password                                                                 | Login user                       |
 | /api/admin/register       | POST   | None          | - phone<br/>- email<br/>- name<br/>- password<br/>- code                               | Register new admininstrator      |
-| /api/admin/create/package | POST   | Admin         | - name<br/>- price                                                                     | Create new internet package      |
-| /api/admin/create/user    | POST   | Admin         | - phone<br/>- email<br/>- name<br/>- password<br/>- code<br/>- address<br/>- packageId | Create new user                  |
-| /api/admin/get-users      | GET    | Admin         | None                                                                                   | Get all users                    |
+| /api/admin/packages | POST   | Admin         | - name<br/>- price                                                                     | Create new internet package      |
+| /api/admin/users    | POST   | Admin         | - phone<br/>- email<br/>- name<br/>- password<br/>- code<br/>- address<br/>- packageId | Create new user                  |
+| /api/admin/users      | GET    | Admin         | None                                                                                   | Get all users                    |
 | /api/user/payments/       | GET    | User          | None                                                                                   | Get package which belong to user |
 
 <p align="right">(<a href="#top">back to top</a>)</p>
