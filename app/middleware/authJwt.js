@@ -1,9 +1,8 @@
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
-const db = require('../models');
+const { User } = require('../models');
 
 const key = process.env.SECRET_KEY;
-const User = db.users;
 
 const verifyToken = async (req, res, next) => {
   if (!req.headers.authorization) {
@@ -25,14 +24,14 @@ const verifyToken = async (req, res, next) => {
         message: err,
       });
     } else {
-      req.userId = decoded.id;
+      req.user = decoded.user;
       next();
     }
   });
 };
 
 const isAdmin = (req, res, next) => {
-  User.findByPk(req.userId).then((user) => {
+  User.findByPk(req.user.id).then((user) => {
     if (user.dataValues.isAdmin) {
       next();
       return;

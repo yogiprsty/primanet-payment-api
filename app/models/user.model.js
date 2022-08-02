@@ -1,10 +1,14 @@
-const User = (sequelize, Sequelize) => (
-  sequelize.define('user', {
+module.exports = (sequelize, Sequelize) => {
+  const User = sequelize.define('users', {
     phone: {
       type: Sequelize.STRING,
       unique: true,
     },
     name: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
+    email: {
       type: Sequelize.STRING,
       allowNull: false,
     },
@@ -18,7 +22,6 @@ const User = (sequelize, Sequelize) => (
       type: Sequelize.BOOLEAN,
       defaultValue: false,
     },
-  })
-);
-
-module.exports = User;
+  });
+  return User;
+};

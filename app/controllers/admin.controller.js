@@ -1,14 +1,13 @@
 require('dotenv').config();
 const bcrypt = require('bcrypt');
-const db = require('../models');
+const { User, Package } = require('../models');
 
-const User = db.users;
 const adminCode = process.env.ADMIN_CODE;
 const saltRounds = 10;
 
 const registerAdmin = (req, res) => {
   const {
-    phone, name, password, code,
+    phone, name, password, code, email,
   } = req.body;
   if (code !== adminCode) {
     return res.status(401).send({
@@ -29,12 +28,15 @@ const registerAdmin = (req, res) => {
   const hash = bcrypt.hashSync(password, saltRounds);
 
   const user = {
-    phone, name, password: hash, isAdmin: 1,
+    phone, name, password: hash, isAdmin: 1, email,
   };
   User.create(user)
     .then((result) => {
       res.status(201);
-      res.send(`User created id: ${result.id}`);
+      res.send({
+        message: 'Admin registered sucessfully',
+        id: result.id,
+      });
     }).catch((err) => {
       res.status(500).send({
         message: err.message,
@@ -42,4 +44,34 @@ const registerAdmin = (req, res) => {
     });
 };
 
-module.exports = { registerAdmin };
+const createPackage = (req, res) => {
+  const { name, price } = req.body;
+  const internetPackage = { name, price };
+
+  Package.create(internetPackage)
+    .then((result) => {
+      res.status(201);
+      res.send({
+        message: 'Package created sucessfully',
+        id: result.id,
+      });
+    }).catch((err) => {
+      res.status(500).send({
+        message: err.message,
+      });
+    });
+};
+
+const getAllUser = async (req, res) => {
+  const users = await User.findAll({
+    where: {
+      isAdmin: 0,
+    },
+    include: [Package],
+  });
+  res.send(users);
+};
+
+module.exports = {
+  registerAdmin, createPackage, getAllUser,
+};

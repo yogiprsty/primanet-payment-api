@@ -1,13 +1,12 @@
 const bcrypt = require('bcrypt');
-const db = require('../models');
+const { User } = require('../models');
 
 const saltRounds = 10;
-const User = db.users;
 // const { Op } = db.Sequelize;
 
 const createUser = (req, res) => {
   const {
-    phone, name, address, password,
+    phone, name, address, password, packageId, email,
   } = req.body;
 
   // Minimum eight characters, at least one letter and one number
@@ -24,12 +23,15 @@ const createUser = (req, res) => {
   const hash = bcrypt.hashSync(password, saltRounds);
 
   const user = {
-    phone, name, address, password: hash,
+    phone, name, address, password: hash, packageId, email,
   };
   User.create(user)
     .then((result) => {
       res.status(201);
-      res.send(`User created id: ${result.id}`);
+      res.send({
+        message: 'User created sucessfully',
+        id: result.id,
+      });
     }).catch((err) => {
       res.status(500).send({
         message: err.message,
@@ -37,4 +39,9 @@ const createUser = (req, res) => {
     });
 };
 
-module.exports = { createUser };
+const getProfile = (req, res) => {
+  const { user } = req;
+  res.send(user);
+};
+
+module.exports = { createUser, getProfile };

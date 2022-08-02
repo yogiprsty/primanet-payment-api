@@ -1,6 +1,8 @@
 const Sequelize = require('sequelize');
 const dbConfig = require('../config/db.config');
 const User = require('./user.model');
+const Package = require('./package.model');
+const Payment = require('./payment.model');
 
 const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   host: dbConfig.HOST,
@@ -13,9 +15,18 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   },
 });
 
-const db = {};
-db.Sequelize = Sequelize;
-db.sequelize = sequelize;
-db.users = User(sequelize, Sequelize);
+const db = {
+  sequelize,
+  User: User(sequelize, Sequelize),
+  Package: Package(sequelize, Sequelize),
+  Payment: Payment(sequelize, Sequelize),
+};
+
+// Define Association
+db.User.belongsTo(db.Package);
+db.Package.hasMany(db.User);
+
+db.User.hasMany(db.Payment);
+db.Payment.belongsTo(db.User);
 
 module.exports = db;
