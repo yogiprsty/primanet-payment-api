@@ -29,43 +29,42 @@ const generatePayment = async (req, res) => {
     });
 };
 
-const getPayments = async (req, res) => {
+const getPayment = async (req, res) => {
   const paymentId = req.params.payment_id;
   const { user } = req;
 
-  if (paymentId) {
-    const payment = await Payment.findByPk(paymentId);
-    if (payment.paid) {
-      return res.send(payment);
-    }
-    const snap = new midtransClient.Snap({
-      // Set to true if you want Production Environment (accept real transaction).
-      isProduction: false,
-      serverKey: SERVER_KEY,
-    });
-    const parameter = {
-      transaction_details: {
-        order_id: payment.payment_id,
-        gross_amount: user.package.price,
-      },
-      credit_card: {
-        secure: false,
-      },
-      customer_details: {
-        full_name: user.name,
-        email: user.email,
-        phone: user.phone,
-      },
-    };
-    snap.createTransaction(parameter)
-      .then((transaction) => {
-        // transaction token
-        const { token } = transaction;
-        res.send({ payment, token, key: CLIENT_KEY });
-      });
-    return;
+  const payment = await Payment.findByPk(paymentId);
+  if (payment.paid) {
+    return res.send(payment);
   }
+  const snap = new midtransClient.Snap({
+    // Set to true if you want Production Environment (accept real transaction).
+    isProduction: false,
+    serverKey: SERVER_KEY,
+  });
+  const parameter = {
+    transaction_details: {
+      order_id: payment.payment_id,
+      gross_amount: user.package.price,
+    },
+    credit_card: {
+      secure: false,
+    },
+    customer_details: {
+      full_name: user.name,
+      email: user.email,
+      phone: user.phone,
+    },
+  };
+  snap.createTransaction(parameter)
+    .then((transaction) => {
+      // transaction token
+      const { token } = transaction;
+      res.send({ payment, token, key: CLIENT_KEY });
+    });
+};
 
+const getAllPayments = (req, res) => {
   Payment.findAll({
     where: {
       userId: req.user.id,
@@ -79,4 +78,4 @@ const getPayments = async (req, res) => {
   });
 };
 
-module.exports = { getPayments, generatePayment };
+module.exports = { getPayment, generatePayment, getAllPayments };

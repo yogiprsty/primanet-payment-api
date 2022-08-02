@@ -76,7 +76,6 @@ const getUser = async (req, res) => {
   const { id } = req.params;
   User.findByPk(id, { includes: [Package] })
     .then((result) => {
-      console.log(result);
       res.send(result);
     })
     .catch((err) => {
