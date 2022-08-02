@@ -13,14 +13,17 @@ A RESTful API for Primanet Payment Application, this API provide payment using M
 
 ### API
 
-| URL                       | Method | Authorization | Data                                                                                   | Description                      |
-|---------------------------|--------|---------------|----------------------------------------------------------------------------------------|----------------------------------|
-| /api/auth/signin          | POST   | None          | - phone<br/>- password                                                                 | Login user                       |
-| /api/admin/register       | POST   | None          | - phone<br/>- email<br/>- name<br/>- password<br/>- code                               | Register new admininstrator      |
-| /api/admin/packages | POST   | Admin         | - name<br/>- price                                                                     | Create new internet package      |
-| /api/admin/users    | POST   | Admin         | - phone<br/>- email<br/>- name<br/>- password<br/>- code<br/>- address<br/>- packageId | Create new user                  |
-| /api/admin/users      | GET    | Admin         | None                                                                                   | Get all users                    |
-| /api/user/payments/       | GET    | User          | None                                                                                   | Get package which belong to user |
+| URL                    | Method | Authorization | Data                                                                                   | Description                      |
+|------------------------|--------|---------------|----------------------------------------------------------------------------------------|----------------------------------|
+| /api/auth/signin       | POST   | None          | - phone<br/>- password                                                                 | Login user                       |
+| /api/admin/register    | POST   | None          | - phone<br/>- email<br/>- name<br/>- password<br/>- code                               | Register new admininstrator      |
+| /api/admin/packages    | POST   | Admin         | - name<br/>- price                                                                     | Create new internet package      |
+| /api/admin/users       | POST   | Admin         | - phone<br/>- email<br/>- name<br/>- password<br/>- code<br/>- address<br/>- packageId | Create new user                  |
+| /api/admin/users       | GET    | Admin         | None                                                                                   | Get all users                    |
+| /api/admin/:id         | GET    | Admin         | None                                                                                   | Get specific user                |
+| /api/user/profile      | GET    | User          | None                                                                                   | Get profile data                 |
+| /api/user/payments/    | GET    | User          | None                                                                                   | Get package which belong to user |
+| /api/user/payments/:id | GET    | User          | None                                                                                   | Get payment token                |
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
