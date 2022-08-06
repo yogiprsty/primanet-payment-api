@@ -13,7 +13,7 @@ app.get('/', (req, res) => {
 
 app.use(apiRouter);
 
-sequelize.sync({ force: true })
+sequelize.sync()
   .then(() => {
     console.log('Synced db.');
   })
