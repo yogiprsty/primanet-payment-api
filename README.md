@@ -16,6 +16,8 @@ A RESTful API for Primanet Payment Application, this API provide payment using M
 | URL                          | Method | Authorization | Data                                                                                   | Description                      |
 |------------------------------|--------|---------------|----------------------------------------------------------------------------------------|----------------------------------|
 | /api/auth/signin             | POST   | None          | - phone<br/>- password                                                                 | Login user                       |
+| /api/auth/password-reset             | POST   | None          | - email                                                                 | Request email for reset password                       |
+| /api/auth/password-reset/:token             | POST   | None          | - password                                                                 | Reset Password                       |
 
 #### Admin
 | URL                          | Method | Authorization | Data                                                                                   | Description                      |
