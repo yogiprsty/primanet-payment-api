@@ -1,0 +1,1233 @@
+{
+	"info": {
+		"_postman_id": "88bb6cc8-6868-42c9-aad2-fbe0eeb654b5",
+		"name": "Primanet Payment API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12174179"
+	},
+	"item": [
+		{
+			"name": "Register Admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response status code should have 201 value', () => {",
+							"    pm.response.to.have.status(201)",
+							"})",
+							"",
+							"pm.test('response Content-Type header should have application/json value', () => {",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8');",
+							"});",
+							"",
+							"pm.test('response body should an object', () => {",
+							"    const responseJson = pm.response.json();",
+							"    pm.expect(responseJson).to.be.an('object');",
+							"}); ",
+							"",
+							"pm.test('response body should have correct property and value', () => {",
+							"    const responseJson = pm.response.json();",
+							"",
+							"    pm.expect(responseJson).to.ownProperty('message');",
+							"    pm.expect(responseJson.message).to.equals('Admin registered sucessfully');",
+							"    ",
+							"    pm.expect(responseJson).to.ownProperty('id');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"phone\" : \"085700991971\",\n    \"email\" : \"primanet71@gmail.com\",\n    \"name\": \"Supriyadi\",\n    \"password\" : \"yadi1234\",\n    \"code\": \"Mendoan\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8001/api/admin/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"api",
+						"admin",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login Admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();",
+							"pm.environment.set(\"jwt_token\", responseJson['token']);",
+							"",
+							"pm.test('response status code should have 200 value', () => {",
+							"    pm.response.to.have.status(200)",
+							"})",
+							"",
+							"pm.test('response Content-Type header should have application/json value', () => {",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8');",
+							"});",
+							"",
+							"pm.test('response body should an object', () => {",
+							"    const responseJson = pm.response.json();",
+							"    pm.expect(responseJson).to.be.an('object');",
+							"}); ",
+							"",
+							"pm.test('response body should have correct property and value', () => {",
+							"    const responseJson = pm.response.json();",
+							"",
+							"    pm.expect(responseJson).to.ownProperty('message');",
+							"    pm.expect(responseJson.message).to.equals('Login sucessfully');",
+							"    ",
+							"    pm.expect(responseJson).to.ownProperty('token');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"phone\" : \"085700991971\",\n    \"password\" : \"yadi1234\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8001/api/auth/signin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"api",
+						"auth",
+						"signin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Admin] Home",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8001/api/admin/home",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"api",
+						"admin",
+						"home"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Admin] Create Package",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response status code should have 201 value', () => {",
+							"    pm.response.to.have.status(201)",
+							"})",
+							"",
+							"pm.test('response Content-Type header should have application/json value', () => {",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8');",
+							"});",
+							"",
+							"pm.test('response body should an object', () => {",
+							"    const responseJson = pm.response.json();",
+							"    pm.expect(responseJson).to.be.an('object');",
+							"}); ",
+							"",
+							"pm.test('response body should have correct property and value', () => {",
+							"    const responseJson = pm.response.json();",
+							"",
+							"    pm.expect(responseJson).to.ownProperty('message');",
+							"    pm.expect(responseJson.message).to.equals('Package created sucessfully');",
+							"    ",
+							"    pm.expect(responseJson).to.ownProperty('id');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Paket Internet 5 Mbps\",\n    \"price\": 100000\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8001/api/admin/packages",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"api",
+						"admin",
+						"packages"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Admin] Create Package 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response status code should have 201 value', () => {",
+							"    pm.response.to.have.status(201)",
+							"})",
+							"",
+							"pm.test('response Content-Type header should have application/json value', () => {",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8');",
+							"});",
+							"",
+							"pm.test('response body should an object', () => {",
+							"    const responseJson = pm.response.json();",
+							"    pm.expect(responseJson).to.be.an('object');",
+							"}); ",
+							"",
+							"pm.test('response body should have correct property and value', () => {",
+							"    const responseJson = pm.response.json();",
+							"",
+							"    pm.expect(responseJson).to.ownProperty('message');",
+							"    pm.expect(responseJson.message).to.equals('Package created sucessfully');",
+							"    ",
+							"    pm.expect(responseJson).to.ownProperty('id');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Paket Internet 10 Mbps\",\n    \"price\": 200000\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8001/api/admin/packages",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"api",
+						"admin",
+						"packages"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Admin] Get All Packages",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8001/api/admin/packages",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"api",
+						"admin",
+						"packages"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Admin] Get Specific Package",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8001/api/admin/packages/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"api",
+						"admin",
+						"packages",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Admin] Update Package",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response status code should have 201 value', () => {",
+							"    pm.response.to.have.status(201)",
+							"})",
+							"",
+							"pm.test('response Content-Type header should have application/json value', () => {",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8');",
+							"});",
+							"",
+							"pm.test('response body should an object', () => {",
+							"    const responseJson = pm.response.json();",
+							"    pm.expect(responseJson).to.be.an('object');",
+							"}); ",
+							"",
+							"pm.test('response body should have correct property and value', () => {",
+							"    const responseJson = pm.response.json();",
+							"",
+							"    pm.expect(responseJson).to.ownProperty('message');",
+							"    pm.expect(responseJson.message).to.equals('Package created sucessfully');",
+							"    ",
+							"    pm.expect(responseJson).to.ownProperty('id');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Paket Internet 500 Mbps\",\n    \"price\": 100000\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8001/api/admin/packages/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"api",
+						"admin",
+						"packages",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Admin] Delete Package",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response status code should have 201 value', () => {",
+							"    pm.response.to.have.status(201)",
+							"})",
+							"",
+							"pm.test('response Content-Type header should have application/json value', () => {",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8');",
+							"});",
+							"",
+							"pm.test('response body should an object', () => {",
+							"    const responseJson = pm.response.json();",
+							"    pm.expect(responseJson).to.be.an('object');",
+							"}); ",
+							"",
+							"pm.test('response body should have correct property and value', () => {",
+							"    const responseJson = pm.response.json();",
+							"",
+							"    pm.expect(responseJson).to.ownProperty('message');",
+							"    pm.expect(responseJson.message).to.equals('Package created sucessfully');",
+							"    ",
+							"    pm.expect(responseJson).to.ownProperty('id');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8001/api/admin/packages/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"api",
+						"admin",
+						"packages",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Admin] Create User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response status code should have 201 value', () => {",
+							"    pm.response.to.have.status(201)",
+							"})",
+							"",
+							"pm.test('response Content-Type header should have application/json value', () => {",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8');",
+							"});",
+							"",
+							"pm.test('response body should an object', () => {",
+							"    const responseJson = pm.response.json();",
+							"    pm.expect(responseJson).to.be.an('object');",
+							"}); ",
+							"",
+							"pm.test('response body should have correct property and value', () => {",
+							"    const responseJson = pm.response.json();",
+							"",
+							"    pm.expect(responseJson).to.ownProperty('message');",
+							"    pm.expect(responseJson.message).to.equals('User created sucessfully');",
+							"    ",
+							"    pm.expect(responseJson).to.ownProperty('id');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"phone\" : \"087764579517\",\n    \"email\" : \"prasetyoyogi321@gmail.com\",\n    \"password\" : \"yogi1234\",\n    \"name\" : \"Yogi Prasetyo\",\n    \"address\" : \"Bejiruyung RT 3 RW 3, Sempor, Kebumen\",\n    \"packageId\" : 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8001/api/admin/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"api",
+						"admin",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Admin] Create User 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response status code should have 201 value', () => {",
+							"    pm.response.to.have.status(201)",
+							"})",
+							"",
+							"pm.test('response Content-Type header should have application/json value', () => {",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8');",
+							"});",
+							"",
+							"pm.test('response body should an object', () => {",
+							"    const responseJson = pm.response.json();",
+							"    pm.expect(responseJson).to.be.an('object');",
+							"}); ",
+							"",
+							"pm.test('response body should have correct property and value', () => {",
+							"    const responseJson = pm.response.json();",
+							"",
+							"    pm.expect(responseJson).to.ownProperty('message');",
+							"    pm.expect(responseJson.message).to.equals('User created sucessfully');",
+							"    ",
+							"    pm.expect(responseJson).to.ownProperty('id');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"phone\" : \"085227568625\",\n    \"email\" : \"danangpras@gmail.com\",\n    \"password\" : \"danang1234\",\n    \"name\" : \"Danang Prastowo Aji\",\n    \"address\" : \"Bejiruyung RT 3 RW 3, Sempor, Kebumen\",\n    \"packageId\" : 2\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8001/api/admin/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"api",
+						"admin",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Admin] Get All Users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response status code should have 200 value', () => {",
+							"    pm.response.to.have.status(200)",
+							"})",
+							"",
+							"pm.test('response Content-Type header should have application/json value', () => {",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8');",
+							"});",
+							"",
+							"pm.test('response body should an array', () => {",
+							"    const responseJson = pm.response.json();",
+							"    pm.expect(responseJson).to.be.an('array');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8001/api/admin/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"api",
+						"admin",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Admin] Get Specific User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response status code should have 200 value', () => {",
+							"    pm.response.to.have.status(200)",
+							"})",
+							"",
+							"pm.test('response Content-Type header should have application/json value', () => {",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8');",
+							"});",
+							"",
+							"pm.test('response body should an array', () => {",
+							"    const responseJson = pm.response.json();",
+							"    pm.expect(responseJson).to.be.an('array');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8001/api/admin/users/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"api",
+						"admin",
+						"users",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Admin] Delete User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response status code should have 200 value', () => {",
+							"    pm.response.to.have.status(200)",
+							"})",
+							"",
+							"pm.test('response Content-Type header should have application/json value', () => {",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8');",
+							"});",
+							"",
+							"pm.test('response body should an array', () => {",
+							"    const responseJson = pm.response.json();",
+							"    pm.expect(responseJson).to.be.an('array');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8001/api/admin/users/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"api",
+						"admin",
+						"users",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Admin] Update User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response status code should have 200 value', () => {",
+							"    pm.response.to.have.status(200)",
+							"})",
+							"",
+							"pm.test('response Content-Type header should have application/json value', () => {",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8');",
+							"});",
+							"",
+							"pm.test('response body should an array', () => {",
+							"    const responseJson = pm.response.json();",
+							"    pm.expect(responseJson).to.be.an('array');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"phone\" : \"087764579517\",\n    \"email\" : \"prasetyoyogi321@gmail.com\",\n    \"password\" : \"yogi1234\",\n    \"name\" : \"Yogi Prasetyo\",\n    \"address\" : \"Bejiruyung RT 3 RW 3, Sempor, Kebumen\",\n    \"packageId\" : 2\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8001/api/admin/users/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"api",
+						"admin",
+						"users",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Admin] Generate Payment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response status code should have 201 value', () => {",
+							"    pm.response.to.have.status(201)",
+							"})",
+							"",
+							"pm.test('response Content-Type header should have application/json value', () => {",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8');",
+							"});",
+							"",
+							"pm.test('response body should an object', () => {",
+							"    const responseJson = pm.response.json();",
+							"    pm.expect(responseJson).to.be.an('object');",
+							"}); ",
+							"",
+							"pm.test('response body should have correct property and value', () => {",
+							"    const responseJson = pm.response.json();",
+							"",
+							"    pm.expect(responseJson).to.ownProperty('message');",
+							"    pm.expect(responseJson.message).to.equals('Payment Generated Successfully');",
+							"    ",
+							"    pm.expect(responseJson).to.ownProperty('count');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8001/api/admin/generate-payments",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"api",
+						"admin",
+						"generate-payments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Admin] Get All Payments",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response status code should have 200 value', () => {",
+							"    pm.response.to.have.status(200)",
+							"})",
+							"",
+							"pm.test('response Content-Type header should have application/json value', () => {",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8');",
+							"});",
+							"",
+							"pm.test('response body should an array', () => {",
+							"    const responseJson = pm.response.json();",
+							"    pm.expect(responseJson).to.be.an('array');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8001/api/admin/payments",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"api",
+						"admin",
+						"payments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody)",
+							"pm.environment.set(\"jwt_token\", jsonData['token']);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"phone\" : \"087764579517\",\n    \"password\" : \"yogi1234\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8001/api/auth/signin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"api",
+						"auth",
+						"signin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login User 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody)",
+							"pm.environment.set(\"jwt_token\", jsonData['token']);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"phone\" : \"085227568625\",\n    \"password\" : \"danang1234\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8001/api/auth/signin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"api",
+						"auth",
+						"signin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[User] Profile",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8001/api/user/profile",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"api",
+						"user",
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[User] Get Payments",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8001/api/user/payments/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"api",
+						"user",
+						"payments",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[User] Get Payment Token",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8001/api/user/payments/NET-220803087764579517",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"api",
+						"user",
+						"payments",
+						"NET-220803087764579517"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Request Password Reset",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"prasetyoyogi321@gmail.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8001/api/auth/password-reset",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"api",
+						"auth",
+						"password-reset"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Password Reset",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"password\": \"yogi12345\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8001/api/auth/password-reset/30aeddea5f11bce3a1449811691221acd015dcc8131ae66211f10dc8640f6343",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"api",
+						"auth",
+						"password-reset",
+						"30aeddea5f11bce3a1449811691221acd015dcc8131ae66211f10dc8640f6343"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
